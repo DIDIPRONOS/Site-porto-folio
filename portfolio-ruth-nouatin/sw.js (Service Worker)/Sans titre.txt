@@ -1,0 +1,433 @@
+/**
+ * Service Worker pour le Portfolio de Ruth Nouatin
+ * Gestion du cache et fonctionnalités hors-ligne
+ */
+
+const CACHE_NAME = 'ruth-portfolio-v1.2.0';
+const STATIC_CACHE = 'ruth-static-v1.2.0';
+const DYNAMIC_CACHE = 'ruth-dynamic-v1.2.0';
+
+// Ressources à mettre en cache immédiatement
+const STATIC_ASSETS = [
+    '/',
+    '/index.html',
+    '/styles.css',
+    '/script.js',
+    '/manifest.json',
+    'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap',
+    'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css',
+    'https://unpkg.com/aos@2.3.1/dist/aos.js'
+];
+
+// Ressources dynamiques (images, etc.)
+const DYNAMIC_ASSETS = [
+    '/images/',
+    '/favicon.ico'
+];
+
+// URLs à exclure du cache
+const EXCLUDE_URLS = [
+    '/admin',
+    '/api',
+    'chrome-extension://',
+    'moz-extension://'
+];
+
+/**
+ * Installation du Service Worker
+ */
+self.addEventListener('install', event => {
+    console.log('[SW] Installation du Service Worker');
+    
+    event.waitUntil(
+        Promise.all([
+            // Cache des ressources statiques
+            caches.open(STATIC_CACHE).then(cache => {
+                console.log('[SW] Mise en cache des ressources statiques');
+                return cache.addAll(STATIC_ASSETS);
+            }),
+            
+            // Préparation du cache dynamique
+            caches.open(DYNAMIC_CACHE).then(cache => {
+                console.log('[SW] Préparation du cache dynamique');
+                return cache.addAll([]);
+            })
+        ]).then(() => {
+            console.log('[SW] Installation terminée');
+            // Forcer l'activation immédiate
+            return self.skipWaiting();
+        }).catch(error => {
+            console.error('[SW] Erreur lors de l\'installation:', error);
+        })
+    );
+});
+
+/**
+ * Activation du Service Worker
+ */
+self.addEventListener('activate', event => {
+    console.log('[SW] Activation du Service Worker');
+    
+    event.waitUntil(
+        Promise.all([
+            // Nettoyage des anciens caches
+            caches.keys().then(cacheNames => {
+                return Promise.all(
+                    cacheNames.map(cacheName => {
+                        if (cacheName !== STATIC_CACHE && 
+                            cacheName !== DYNAMIC_CACHE && 
+                            cacheName !== CACHE_NAME) {
+                            console.log('[SW] Suppression de l\'ancien cache:', cacheName);
+                            return caches.delete(cacheName);
+                        }
+                    })
+                );
+            }),
+            
+            // Prise de contrôle immédiate
+            self.clients.claim()
+        ]).then(() => {
+            console.log('[SW] Activation terminée');
+        }).catch(error => {
+            console.error('[SW] Erreur lors de l\'activation:', error);
+        })
+    );
+});
+
+/**
+ * Interception des requêtes réseau
+ */
+self.addEventListener('fetch', event => {
+    const requestUrl = event.request.url;
+    
+    // Ignorer certaines URLs
+    if (EXCLUDE_URLS.some(excludeUrl => requestUrl.includes(excludeUrl))) {
+        return;
+    }
+    
+    // Stratégie Cache First pour les ressources statiques
+    if (isStaticAsset(requestUrl)) {
+        event.respondWith(cacheFirstStrategy(event.request));
+    }
+    // Stratégie Network First pour le HTML principal
+    else if (event.request.headers.get('accept').includes('text/html')) {
+        event.respondWith(networkFirstStrategy(event.request));
+    }
+    // Stratégie Stale While Revalidate pour les autres ressources
+    else {
+        event.respondWith(staleWhileRevalidateStrategy(event.request));
+    }
+});
+
+/**
+ * Stratégie Cache First
+ * Idéale pour les ressources statiques (CSS, JS, fonts, images)
+ */
+async function cacheFirstStrategy(request) {
+    try {
+        // Chercher d'abord en cache
+        const cachedResponse = await caches.match(request);
+        if (cachedResponse) {
+            console.log('[SW] Ressource servie depuis le cache:', request.url);
+            return cachedResponse;
+        }
+        
+        // Si pas en cache, récupérer depuis le réseau
+        const networkResponse = await fetch(request);
+        
+        // Mettre en cache si la réponse est valide
+        if (networkResponse.status === 200) {
+            const cache = await caches.open(STATIC_CACHE);
+            cache.put(request, networkResponse.clone());
+            console.log('[SW] Nouvelle ressource mise en cache:', request.url);
+        }
+        
+        return networkResponse;
+        
+    } catch (error) {
+        console.error('[SW] Erreur Cache First:', error);
+        
+        // Fallback vers une page d'erreur ou ressource par défaut
+        if (request.destination === 'image') {
+            return new Response(
+                '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200"><rect width="200" height="200" fill="#f0f0f0"/><text x="100" y="100" text-anchor="middle" fill="#999">Image non disponible</text></svg>',
+                { headers: { 'Content-Type': 'image/svg+xml' } }
+            );
+        }
+        
+        throw error;
+    }
+}
+
+/**
+ * Stratégie Network First
+ * Idéale pour le contenu HTML qui change fréquemment
+ */
+async function networkFirstStrategy(request) {
+    try {
+        // Essayer d'abord le réseau
+        const networkResponse = await fetch(request);
+        
+        // Mettre en cache si succès
+        if (networkResponse.status === 200) {
+            const cache = await caches.open(DYNAMIC_CACHE);
+            cache.put(request, networkResponse.clone());
+            console.log('[SW] Contenu HTML mis à jour en cache:', request.url);
+        }
+        
+        return networkResponse;
+        
+    } catch (error) {
+        console.log('[SW] Réseau indisponible, tentative cache:', request.url);
+        
+        // Fallback vers le cache
+        const cachedResponse = await caches.match(request);
+        if (cachedResponse) {
+            console.log('[SW] Contenu servi depuis le cache (hors ligne):', request.url);
+            return cachedResponse;
+        }
+        
+        // Page d'erreur personnalisée pour le mode hors ligne
+        return new Response(`
+            <!DOCTYPE html>
+            <html lang="fr">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Hors ligne - Ruth Nouatin</title>
+                <style>
+                    body {
+                        font-family: 'Poppins', sans-serif;
+                        background: linear-gradient(135deg, #2c3e50, #3498db);
+                        color: white;
+                        text-align: center;
+                        padding: 50px 20px;
+                        margin: 0;
+                    }
+                    .offline-container {
+                        max-width: 600px;
+                        margin: 0 auto;
+                    }
+                    .offline-icon {
+                        font-size: 4rem;
+                        margin-bottom: 2rem;
+                    }
+                    h1 { margin-bottom: 1rem; }
+                    p { font-size: 1.1rem; margin-bottom: 2rem; }
+                    .retry-btn {
+                        background: white;
+                        color: #2c3e50;
+                        padding: 12px 30px;
+                        border: none;
+                        border-radius: 25px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        font-size: 1rem;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="offline-container">
+                    <div class="offline-icon">📡</div>
+                    <h1>Vous êtes hors ligne</h1>
+                    <p>Impossible de charger cette page. Vérifiez votre connexion internet et réessayez.</p>
+                    <p><strong>Ruth Nouatin</strong><br>
+                    Assistante de Direction | Secrétaire Administrative<br>
+                    📞 +229 01 91 55 73 63</p>
+                    <button class="retry-btn" onclick="window.location.reload()">
+                        Réessayer
+                    </button>
+                </div>
+            </body>
+            </html>
+        `, {
+            status: 200,
+            headers: { 'Content-Type': 'text/html; charset=utf-8' }
+        });
+    }
+}
+
+/**
+ * Stratégie Stale While Revalidate
+ * Idéale pour les ressources qui peuvent être mises à jour en arrière-plan
+ */
+async function staleWhileRevalidateStrategy(request) {
+    const cache = await caches.open(DYNAMIC_CACHE);
+    const cachedResponse = await cache.match(request);
+    
+    // Récupération en arrière-plan
+    const fetchPromise = fetch(request).then(networkResponse => {
+        if (networkResponse.status === 200) {
+            cache.put(request, networkResponse.clone());
+            console.log('[SW] Ressource mise à jour en arrière-plan:', request.url);
+        }
+        return networkResponse;
+    }).catch(error => {
+        console.log('[SW] Échec de mise à jour en arrière-plan:', request.url);
+        return null;
+    });
+    
+    // Retourner le cache immédiatement si disponible, sinon attendre le réseau
+    return cachedResponse || await fetchPromise;
+}
+
+/**
+ * Vérifier si une ressource est statique
+ */
+function isStaticAsset(url) {
+    return STATIC_ASSETS.some(asset => url.includes(asset)) ||
+           url.includes('.css') ||
+           url.includes('.js') ||
+           url.includes('.woff') ||
+           url.includes('.woff2') ||
+           url.includes('fonts.googleapis.com') ||
+           url.includes('cdnjs.cloudflare.com');
+}
+
+/**
+ * Gestion des messages depuis l'application principale
+ */
+self.addEventListener('message', event => {
+    console.log('[SW] Message reçu:', event.data);
+    
+    if (event.data && event.data.type === 'SKIP_WAITING') {
+        self.skipWaiting();
+    }
+    
+    if (event.data && event.data.type === 'GET_VERSION') {
+        event.ports[0].postMessage({
+            version: CACHE_NAME,
+            static: STATIC_CACHE,
+            dynamic: DYNAMIC_CACHE
+        });
+    }
+    
+    if (event.data && event.data.type === 'CLEAR_CACHE') {
+        caches.keys().then(cacheNames => {
+            return Promise.all(
+                cacheNames.map(cacheName => caches.delete(cacheName))
+            );
+        }).then(() => {
+            event.ports[0].postMessage({ success: true });
+        });
+    }
+});
+
+/**
+ * Gestion de la synchronisation en arrière-plan
+ */
+self.addEventListener('sync', event => {
+    console.log('[SW] Synchronisation en arrière-plan:', event.tag);
+    
+    if (event.tag === 'background-sync') {
+        event.waitUntil(doBackgroundSync());
+    }
+});
+
+/**
+ * Synchronisation en arrière-plan
+ */
+async function doBackgroundSync() {
+    try {
+        console.log('[SW] Exécution de la synchronisation en arrière-plan');
+        
+        // Ici, vous pourriez synchroniser des données, 
+        // envoyer des formulaires en attente, etc.
+        
+        // Exemple: vérifier les mises à jour du site
+        const response = await fetch('/');
+        if (response.ok) {
+            const cache = await caches.open(DYNAMIC_CACHE);
+            await cache.put('/', response);
+            console.log('[SW] Site mis à jour en arrière-plan');
+        }
+        
+    } catch (error) {
+        console.error('[SW] Erreur lors de la synchronisation:', error);
+    }
+}
+
+/**
+ * Gestion des notifications push (préparé pour usage futur)
+ */
+self.addEventListener('push', event => {
+    console.log('[SW] Notification push reçue:', event);
+    
+    const options = {
+        body: event.data ? event.data.text() : 'Nouvelle notification',
+        icon: '/images/icon-192x192.png',
+        badge: '/images/badge-72x72.png',
+        vibrate: [100, 50, 100],
+        data: {
+            dateOfArrival: Date.now(),
+            primaryKey: '1'
+        },
+        actions: [
+            {
+                action: 'explore',
+                title: 'Voir le portfolio',
+                icon: '/images/checkmark.png'
+            },
+            {
+                action: 'close',
+                title: 'Fermer',
+                icon: '/images/xmark.png'
+            }
+        ]
+    };
+    
+    event.waitUntil(
+        self.registration.showNotification('Ruth Nouatin - Portfolio', options)
+    );
+});
+
+/**
+ * Gestion des clics sur les notifications
+ */
+self.addEventListener('notificationclick', event => {
+    console.log('[SW] Clic sur notification:', event);
+    
+    event.notification.close();
+    
+    if (event.action === 'explore') {
+        event.waitUntil(
+            clients.openWindow('/')
+        );
+    }
+});
+
+/**
+ * Nettoyage périodique du cache
+ */
+self.addEventListener('periodicsync', event => {
+    if (event.tag === 'cache-cleanup') {
+        event.waitUntil(cleanupOldCache());
+    }
+});
+
+/**
+ * Nettoyage des anciens éléments du cache
+ */
+async function cleanupOldCache() {
+    const cache = await caches.open(DYNAMIC_CACHE);
+    const requests = await cache.keys();
+    const now = Date.now();
+    const maxAge = 7 * 24 * 60 * 60 * 1000; // 7 jours
+    
+    for (const request of requests) {
+        const response = await cache.match(request);
+        const dateHeader = response.headers.get('date');
+        
+        if (dateHeader) {
+            const age = now - new Date(dateHeader).getTime();
+            if (age > maxAge) {
+                await cache.delete(request);
+                console.log('[SW] Suppression du cache expiré:', request.url);
+            }
+        }
+    }
+}
+
+// Log de démarrage
+console.log('[SW] Service Worker Ruth Portfolio chargé');
+console.log('[SW] Version:', CACHE_NAME);

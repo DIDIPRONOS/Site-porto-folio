@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruth Nouatin - Portfolio Professionnel</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span>Ruth Nouatin</span>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#home" class="nav-link">Accueil</a></li>
+                <li><a href="#about" class="nav-link">À Propos</a></li>
+                <li><a href="#experience" class="nav-link">Expérience</a></li>
+                <li><a href="#skills" class="nav-link">Compétences</a></li>
+                <li><a href="#education" class="nav-link">Formation</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Section Hero -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">Ruth Djaou R. <span class="highlight">NOUATIN</span></h1>
+                    <h2 class="hero-subtitle">Assistante de Direction | Secrétaire Administrative</h2>
+                    <p class="hero-description">
+                        Professionnelle expérimentée avec 2+ années d'expertise en assistance administrative, 
+                        gestion d'agenda et communication d'entreprise. Passionnée par l'excellence opérationnelle 
+                        et l'optimisation des processus administratifs.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="#contact" class="btn btn-primary">Me Contacter</a>
+                        <a href="#about" class="btn btn-secondary">En Savoir Plus</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <div class="profile-card">
+                        <div class="profile-avatar">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <div class="contact-info">
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span>+229 01 91 55 73 63</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>ruthnouatin9@gmail.com</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Porto-Novo, Bénin</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section À Propos -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Profil Professionnel</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p class="about-description">
+                        Assistante de Direction expérimentée titulaire d'un Bac+2 en Secrétariat de Direction 
+                        avec plus de 2 années d'expérience pratique en assistance administrative, gestion d'agenda 
+                        et accueil clientèle. Ma polyvalence et mon autonomie me permettent de maîtriser parfaitement 
+                        le Pack Office complet tout en développant une solide expertise en organisation logistique, 
+                        communication administrative et gestion bureautique.
+                    </p>
+                    <p class="about-description">
+                        Dotée d'un excellent sens commercial et d'un esprit d'analyse développé, je mets mes 
+                        compétences au service d'organisations dynamiques en recherche d'excellence opérationnelle. 
+                        Mon approche professionnelle combine rigueur technique, relationnel de qualité et 
+                        adaptabilité aux environnements en constante évolution.
+                    </p>
+                </div>
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">2+</div>
+                        <div class="stat-label">Années d'Expérience</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Clients/Jour</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Satisfaction</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Expérience -->
+    <section id="experience" class="experience">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Expérience Professionnelle</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item" data-aos="fade-up">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>Secrétaire-Caissière</h3>
+                            <span class="company">Pharmacie Kokoyè, Porto-Novo</span>
+                            <span class="period">Juin 2023 - Juillet 2025 (2 ans)</span>
+                        </div>
+                        <ul class="timeline-tasks">
+                            <li>Gestion complète d'agenda et planification des rendez-vous clients/fournisseurs</li>
+                            <li>Accueil et conseil clientèle (50+ clients/jour) avec excellence relationnelle</li>
+                            <li>Administration générale : rédaction courriers, classement, archivage documentaire</li>
+                            <li>Coordination logistique : organisation des livraisons et gestion des stocks</li>
+                            <li>Gestion de caisse : encaissements, décaissements, rapports journaliers</li>
+                            <li>Communication administrative et interface avec les services externes</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-up">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>Stage en Secrétariat de Direction</h3>
+                            <span class="company">SONEB - Direction Générale</span>
+                            <span class="period">Juin 2022 - Septembre 2022 (3 mois)</span>
+                        </div>
+                        <ul class="timeline-tasks">
+                            <li>Assistance directe au Directeur Général pour la gestion administrative quotidienne</li>
+                            <li>Gestion d'agenda complexe : planification réunions, déplacements et événements</li>
+                            <li>Préparation logistique des événements professionnels et séminaires</li>
+                            <li>Rédaction de comptes-rendus, correspondances officielles et notes de service</li>
+                            <li>Coordination entre différents services internes et partenaires externes</li>
+                            <li>Traitement et filtrage des communications téléphoniques et courriers</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-up">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>Stage en Secrétariat de Direction</h3>
+                            <span class="company">ALDAMAH SARL</span>
+                            <span class="period">Novembre 2019 - Janvier 2020 (3 mois)</span>
+                        </div>
+                        <ul class="timeline-tasks">
+                            <li>Support administratif et secrétariat de direction dans environnement privé</li>
+                            <li>Gestion des rendez-vous et organisation logistique des déplacements</li>
+                            <li>Traitement des documents administratifs et commerciaux</li>
+                            <li>Accueil physique et téléphonique des clients et partenaires</li>
+                            <li>Archivage et mise à jour de la documentation professionnelle</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Compétences -->
+    <section id="skills" class="skills">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Compétences & Expertise</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-category" data-aos="fade-up">
+                    <div class="category-header">
+                        <i class="fas fa-laptop"></i>
+                        <h3>Pack Office Complet</h3>
+                    </div>
+                    <div class="skill-items">
+                        <div class="skill-item">
+                            <span>Microsoft Word</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>Microsoft Excel</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>PowerPoint</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="88%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <span>Outlook</span>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="92%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="100">
+                    <div class="category-header">
+                        <i class="fas fa-cogs"></i>
+                        <h3>Compétences Administratives</h3>
+                    </div>
+                    <div class="skill-list">
+                        <div class="skill-tag">Gestion d'agenda et planification</div>
+                        <div class="skill-tag">Rédaction professionnelle</div>
+                        <div class="skill-tag">Archivage et classement</div>
+                        <div class="skill-tag">Organisation d'événements</div>
+                        <div class="skill-tag">Coordination inter-services</div>
+                    </div>
+                </div>
+
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="200">
+                    <div class="category-header">
+                        <i class="fas fa-handshake"></i>
+                        <h3>Relations & Commercial</h3>
+                    </div>
+                    <div class="skill-list">
+                        <div class="skill-tag">Accueil clientèle</div>
+                        <div class="skill-tag">Communication interpersonnelle</div>
+                        <div class="skill-tag">Gestion des conflits</div>
+                        <div class="skill-tag">Prospection commerciale</div>
+                        <div class="skill-tag">Service client</div>
+                    </div>
+                </div>
+
+                <div class="skill-category" data-aos="fade-up" data-aos-delay="300">
+                    <div class="category-header">
+                        <i class="fas fa-user-check"></i>
+                        <h3>Qualités Comportementales</h3>
+                    </div>
+                    <div class="skill-list">
+                        <div class="skill-tag">Dynamisme et initiative</div>
+                        <div class="skill-tag">Autonomie et décision</div>
+                        <div class="skill-tag">Rigueur et analyse</div>
+                        <div class="skill-tag">Discrétion et confidentialité</div>
+                        <div class="skill-tag">Adaptabilité</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="languages-section">
+                <h3>Compétences Linguistiques</h3>
+                <div class="languages-grid">
+                    <div class="language-item">
+                        <div class="language-info">
+                            <span class="language-name">Français</span>
+                            <span class="language-level">Excellent niveau</span>
+                        </div>
+                        <div class="language-bar">
+                            <div class="language-progress" data-width="100%"></div>
+                        </div>
+                    </div>
+                    <div class="language-item">
+                        <div class="language-info">
+                            <span class="language-name">Anglais</span>
+                            <span class="language-level">Niveau intermédiaire</span>
+                        </div>
+                        <div class="language-bar">
+                            <div class="language-progress" data-width="70%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Formation -->
+    <section id="education" class="education">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Formation & Qualifications</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="education-grid">
+                <div class="education-item" data-aos="fade-up">
+                    <div class="education-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="education-content">
+                        <h3>Bac+2 en Secrétariat de Direction</h3>
+                        <p class="institution">Université Protestante de l'Afrique de l'Ouest (UPAO)</p>
+                        <span class="year">2019-2020</span>
+                    </div>
+                </div>
+
+                <div class="education-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="education-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <div class="education-content">
+                        <h3>Formation en Secrétariat Bureautique</h3>
+                        <p class="institution">Établissement CIP - IMI</p>
+                        <span class="year">Mai-Août 2020</span>
+                    </div>
+                </div>
+
+                <div class="education-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="education-icon">
+                        <i class="fas fa-computer"></i>
+                    </div>
+                    <div class="education-content">
+                        <h3>Formation en Informatique</h3>
+                        <p class="institution">Établissement ALPHA-OMEGA INFORMATIQUE</p>
+                        <span class="year">Juillet-Septembre 2018</span>
+                    </div>
+                </div>
+
+                <div class="education-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="education-icon">
+                        <i class="fas fa-school"></i>
+                    </div>
+                    <div class="education-content">
+                        <h3>Baccalauréat A2</h3>
+                        <p class="institution">Complexe Scolaire Privé "La grâce"</p>
+                        <span class="year">2016-2017</span>
+                    </div>
+                </div>
+
+                <div class="education-item" data-aos="fade-up" data-aos-delay="400">
+                    <div class="education-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <div class="education-content">
+                        <h3>Permis de Conduire Catégorie B</h3>
+                        <p class="institution">Véhiculée - Mobilité assurée</p>
+                        <span class="year">2017-2018</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Contact -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Me Contacter</h2>
+                <div class="section-divider"></div>
+                <p class="section-description">
+                    Disponible immédiatement pour nouvelles opportunités professionnelles. 
+                    N'hésitez pas à me contacter pour discuter de vos besoins.
+                </p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info-grid">
+                    <div class="contact-card" data-aos="fade-up">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Téléphone</h4>
+                            <p>+229 01 91 55 73 63</p>
+                            <a href="tel:+22901915573633" class="contact-link">Appeler maintenant</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Email</h4>
+                            <p>ruthnouatin9@gmail.com</p>
+                            <a href="mailto:ruthnouatin9@gmail.com" class="contact-link">Envoyer un email</a>
+                        </div>
+                    </div>
+
+                    <div class="contact-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Localisation</h4>
+                            <p>Porto-Novo, Bénin</p>
+                            <span class="contact-note">Mobilité géographique</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="references-section">
+                    <h3>Références Professionnelles</h3>
+                    <div class="references-grid">
+                        <div class="reference-card" data-aos="fade-up">
+                            <div class="reference-header">
+                                <i class="fas fa-user-tie"></i>
+                                <div>
+                                    <h4>Bruno AGBO-DJAGRI</h4>
+                                    <p>Chef Service Applications Numériques - SONEB</p>
+                                </div>
+                            </div>
+                            <div class="reference-contact">
+                                <span><i class="fas fa-phone"></i> 01 95 06 29 18 / 01 96 50 13 14</span>
+                                <span class="reference-role">Superviseur de stage (2022)</span>
+                            </div>
+                        </div>
+
+                        <div class="reference-card" data-aos="fade-up" data-aos-delay="100">
+                            <div class="reference-header">
+                                <i class="fas fa-user-tie"></i>
+                                <div>
+                                    <h4>Chimène DOSSOU</h4>
+                                    <p>Secrétaire Particulière - Responsable Marchés Publics SONEB</p>
+                                </div>
+                            </div>
+                            <div class="reference-contact">
+                                <span><i class="fas fa-phone"></i> 01 95 86 98 40</span>
+                                <span class="reference-role">Encadrante directe (2022)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <h3>Ruth Djaou R. NOUATIN</h3>
+                    <p>Assistante de Direction | Secrétaire Administrative</p>
+                    <div class="footer-details">
+                        <span><i class="fas fa-check-circle"></i> Disponibilité immédiate</span>
+                        <span><i class="fas fa-check-circle"></i> Mobilité géographique et fonctionnelle</span>
+                        <span><i class="fas fa-check-circle"></i> Présentation soignée et professionnelle</span>
+                    </div>
+                </div>
+                <div class="footer-contact">
+                    <div class="footer-contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+229 01 91 55 73 63</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>ruthnouatin9@gmail.com</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Porto-Novo, Bénin</span>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Ruth Nouatin. Portfolio professionnel - Tous droits réservés.</p>
+                <p class="footer-certification">
+                    <i class="fas fa-certificate"></i>
+                    Je certifie l'exactitude des informations mentionnées dans ce portfolio.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bouton de retour en haut -->
+    <button class="scroll-to-top" id="scrollToTop">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
