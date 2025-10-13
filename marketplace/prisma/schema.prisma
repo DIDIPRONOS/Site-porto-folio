@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Enumerations describing roles, product status and condition
+enum UserRole {
+  ENTREPRENEUR
+  COMMERCIAL
+}
+
+enum ProductStatus {
+  DRAFT
+  REVIEW
+  PUBLISHED
+}
+
+enum Condition {
+  NEW
+  USED
+  REFURBISHED
+}
+
+model Seller {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  phone     String?
+  company   String?
+  role      UserRole
+  products  Product[]
+  createdAt DateTime @default(now())
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+  products  Product[]
+}
+
+model Product {
+  id          String        @id @default(cuid())
+  title       String
+  description String
+  priceCents  Int
+  currency    String        @default("EUR")
+  condition   Condition     @default(NEW)
+  imageUrl    String?
+  status      ProductStatus @default(REVIEW)
+
+  // Relations
+  category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId String?
+
+  seller   Seller   @relation(fields: [sellerId], references: [id])
+  sellerId String
+
+  leads    Lead[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Lead {
+  id        String   @id @default(cuid())
+  product   Product  @relation(fields: [productId], references: [id])
+  productId String
+  name      String
+  email     String
+  phone     String?
+  message   String
+  createdAt DateTime @default(now())
+}
